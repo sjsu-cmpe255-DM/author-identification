@@ -53,19 +53,20 @@ cleaned_text = preprocess_text(text)
 print(cleaned_text)
 
 df = pd.DataFrame(train_data)
+dftest = pd.DataFrame(test_data)
 # Apply the preprocess_text function to the dataset
 df['cleaned_text'] = df['text'].apply(preprocess_text)
+dftest['cleaned_text'] = dftest['text'].apply(preprocess_text)
 print(df.head())  # Print the first few rows of the preprocessed dataset
-# print(df['cleaned_text'].to_string(index=0))
-
+print(dftest.head())
 
 
 # Initialize TF-IDF Vectorizer
 vectorizer = TfidfVectorizer(max_features=5000)
 
 # Transform training and testing data
-X_train = vectorizer.fit_transform(train_data['cleaned_text']).toarray()
-X_test = vectorizer.transform(test_data['cleaned_text']).toarray()
+X_train = vectorizer.fit_transform(df['cleaned_text']).toarray()
+X_test = vectorizer.transform(dftest['cleaned_text']).toarray()
 
 y_train = train_data['author']
 y_test = test_data['author']
