@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import string
 import nltk
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -34,8 +35,8 @@ def load_data(directory):
 
 
 # Paths to training and testing sets
-train_path = "/Users/pranavtadepu/pyenvs/author-identification/data/C50train"
-test_path = "/Users/pranavtadepu/pyenvs/author-identification/data/C50test"
+train_path = "../../data/C50test"
+test_path = "../../data/C50test"
 
 train_data = load_data(train_path)
 test_data = load_data(test_path)
@@ -64,8 +65,8 @@ print(df.head())  # Print the first few rows of the preprocessed dataset
 vectorizer = TfidfVectorizer(max_features=5000)
 
 # Transform training and testing data
-X_train = vectorizer.fit_transform(train_data['cleaned_text']).toarray()
-X_test = vectorizer.transform(test_data['cleaned_text']).toarray()
+X_train = vectorizer.fit_transform(train_data['text']).toarray()
+X_test = vectorizer.transform(test_data['text']).toarray()
 
 y_train = train_data['author']
 y_test = test_data['author']
